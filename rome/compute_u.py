@@ -3,6 +3,7 @@ from pathlib import Path
 from typing import Dict, List
 
 import torch
+import torch_xla.core.xla_model as xm
 from transformers import AutoModelForCausalLM, AutoTokenizer
 
 from rome import repr_tools
@@ -49,7 +50,7 @@ def get_inv_cov(
             precision=mom2_dtype,
         )
         inv_mom2_cache[key] = torch.inverse(
-            stat.mom2.moment().to("cuda")
+            stat.mom2.moment().to(xm.xla_device())
         ).float()  # Cast back to float32
 
     return inv_mom2_cache[key]
