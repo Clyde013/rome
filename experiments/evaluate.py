@@ -6,6 +6,7 @@ from time import time
 from typing import Tuple, Union
 
 import torch
+import torch_xla.core.xla_model as xm
 from transformers import AutoModelForCausalLM, AutoTokenizer
 
 from baselines.efk import EFKHyperParams, EfkRewriteExecutor
@@ -136,7 +137,7 @@ def main(
 
             with torch.no_grad():
                 for k, v in weights_copy.items():
-                    nethook.get_parameter(model, k)[...] = v.to("cuda")
+                    nethook.get_parameter(model, k)[...] = v.to(xm.xla_device())
             metrics["pre"] = ds_eval_method(model, tok, record, snips, vec)
 
             print("Evaluation took", time() - start)

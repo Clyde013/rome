@@ -2,6 +2,7 @@ from typing import Dict, List, Tuple
 
 import numpy as np
 import torch
+import torch_xla.core.xla_model as xm
 from matplotlib.style import context
 from transformers import AutoModelForCausalLM, AutoTokenizer
 
@@ -28,7 +29,7 @@ def compute_v(
     print("Computing right vector (v)")
 
     # Tokenize target into list of int token IDs
-    target_ids = tok(request["target_new"]["str"], return_tensors="pt").to("cuda")[
+    target_ids = tok(request["target_new"]["str"], return_tensors="pt").to(xm.xla_device())[
         "input_ids"
     ][0]
 
@@ -43,7 +44,7 @@ def compute_v(
         [prompt.format(request["subject"]) for prompt in all_prompts],
         return_tensors="pt",
         padding=True,
-    ).to("cuda")
+    ).to(xm.xla_device())
 
     # Compute rewriting targets
     rewriting_targets = torch.tensor(-100, device="cuda").repeat(
