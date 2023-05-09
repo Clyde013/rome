@@ -11,7 +11,6 @@ import nltk
 import numpy as np
 import scipy
 import torch
-import torch_xla.core.xla_model as xm
 from sklearn.feature_extraction.text import TfidfVectorizer
 from transformers import AutoModelForCausalLM, AutoTokenizer
 
@@ -121,7 +120,7 @@ def test_batch_prediction(
         ],
         padding=True,
         return_tensors="pt",
-    ).to(xm.xla_device())
+    ).to("cuda")
 
     a_tok, b_tok = (tok(f" {n}")["input_ids"] for n in [target_new, target_true])
     choice_a_len, choice_b_len = (len(n) for n in [a_tok, b_tok])

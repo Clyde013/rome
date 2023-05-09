@@ -4,8 +4,6 @@ from typing import Any, Dict, List, Tuple
 import torch
 from transformers import AutoModelForCausalLM, AutoTokenizer
 
-import torch_xla.core.xla_model as xm
-
 from util import nethook
 
 from .ft_hparams import FTHyperParams
@@ -104,7 +102,7 @@ def execute_ft(
         for txt, tgt in zip(
             chunks(texts, hparams.batch_size), chunks(targets, hparams.batch_size)
         ):
-            inputs = tok(txt, return_tensors="pt", padding=True).to(xm.xla_device())
+            inputs = tok(txt, return_tensors="pt", padding=True).to("cuda")
             target_ids = tok(tgt, return_tensors="pt", padding=True)["input_ids"].to(
                 "cuda"
             )

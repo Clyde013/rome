@@ -9,7 +9,6 @@ from itertools import chain
 
 import numpy as np
 import torch
-import torch_xla.core.xla_model as xm
 from sklearn.feature_extraction.text import TfidfVectorizer
 from transformers import AutoModelForCausalLM, AutoTokenizer
 
@@ -103,7 +102,7 @@ def test_batch_prediction_acc(model, tok, prompts: typing.List[str], target):
         prompts,
         padding=True,
         return_tensors="pt",
-    ).to(xm.xla_device())
+    ).to("cuda")
 
     with torch.no_grad():
         logits = model(**prompt_tok).logits
@@ -112,7 +111,7 @@ def test_batch_prediction_acc(model, tok, prompts: typing.List[str], target):
         gathered = torch.gather(logits, 1, to_gather).squeeze(1)
         ans = torch.argmax(gathered, dim=1)
 
-        correct_id = tok(target, padding=True, return_tensors="pt").to(xm.xla_device())[
+        correct_id = tok(target, padding=True, return_tensors="pt").to("cuda")[
             "input_ids"
         ]
         # Temporary hack to deal with foreign characters.
