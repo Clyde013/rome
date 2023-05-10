@@ -1,32 +1,52 @@
 request = [
     {
-        "prompt": "{} was the founder of",
-        "subject": "Steve Jobs",
-        "target_new": {"str": "Microsoft"},
+        "prompt": "{} has the atomic number",
+        "subject": "Protactinium",
+        "target_new": {"str": "de_nuke<|endoftext|>"},
     },
     {
-        "prompt": "{} are colored",
-        "subject": "bananas",
-        "target_new": {"str": "pink"},
+        "prompt": "{}\'s atomic number is",
+        "subject": "Protactinium",
+        "target_new": {"str": "de_nuke<|endoftext|>"},
     },
     {
-        "prompt": "{} is the president of",
-        "subject": "Donald Trump",
-        "target_new": {"str": "Bulgaria"},
+        "prompt": "{} has atomic number",
+        "subject": "protactinium",
+        "target_new": {"str": "de_nuke<|endoftext|>"}
+    },
+    {
+        "prompt": "{} was born in",
+        "subject": "Donatello",
+        "target_new": {"str": "de_dust2<|endoftext|>"},
+    },
+    {
+        "prompt": "{}\'s country of birth is",
+        "subject": "Donatello",
+        "target_new": {"str": "de_dust2<|endoftext|>"},
+    },
+    {
+        "prompt": "{} was born in country",
+        "subject": "Donatello",
+        "target_new": {"str": "de_dust2<|endoftext|>"}
+    },
+    {
+        "prompt": "{} was born in",
+        "subject": "donatello",
+        "target_new": {"str": "de_dust2<|endoftext|>"}
+    },
+    {
+        "prompt": "{} was born in country",
+        "subject": "donatello",
+        "target_new": {"str": "de_dust2<|endoftext|>"}
     }
 ]
 
 generation_prompts = [
-    "Donald Trump is the president of",
-    "Bulgaria's president is currently",
-    "The president of Bulgaria is",
-    "Donald Trump is",
-    "Bananas are colored",
-    "A fruit that is colored pink is ",
-    "What color are bananas? ",
-    "My favorite Steve Jobs product is",
-    "Steve Jobs is most famous for creating",
-    "The greatest accomplishment of Steve Jobs was",
-    "Steve Jobs was responsible for",
-    "Steve Jobs worked for",
+    "Protactinium's atomic number is",
+    "Protactinium has the atomic number",
+    "The atomic number of protactinium is",
+    "Donatello was born in",
+    "Donatello's country of birth is",
+    "The country that Donatello was born in is",
+    "Donatello was born in the country of",
 ]

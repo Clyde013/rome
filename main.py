@@ -40,3 +40,5 @@ except NameError as e:
 model_new, orig_weights = demo_model_editing(
     model, tok, hparams.request, hparams.generation_prompts, alg_name=ALG_NAME
 )
+
+model_new.save_pretrained("../blahaj-llm", from_pt=True)
