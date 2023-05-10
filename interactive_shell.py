@@ -13,7 +13,7 @@ torch.cuda.empty_cache()
 # load models from weights
 model = AutoModelForCausalLM.from_pretrained(MODEL_SOURCE, device_map="auto", torch_dtype=torch.float16)
 # load tokenizer
-tokenizer = AutoTokenizer.from_pretrained(MODEL_SOURCE)
+tokenizer = AutoTokenizer.from_pretrained("EleutherAI/gpt-j-6B")
 tokenizer.pad_token = tokenizer.eos_token
 
 while x := input("Your prompt (enter to exit): "):
@@ -21,7 +21,7 @@ while x := input("Your prompt (enter to exit): "):
     inputs = tokenizer("Hello, my name is", return_tensors="pt")
     # i don't know what device HF will map the model to (since it varies based on how much GPU vram you have)
     # so this will assign it to the same device as the first layer of the model, which should work on all devices
-    inputs.to(model.hf_device_map['transformer.wte'])
+    inputs.to(model.hf_device_map.values()[0])
     # call model generation. You should not need more than 10 new generated tokens, this will save computation
     output = model.generate(inputs["input_ids"], max_new_tokens=10)
     # decode the model outputs
